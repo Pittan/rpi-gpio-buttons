@@ -1,6 +1,6 @@
 {
   "name": "@pittankopta/rpi-gpio-buttons",
-  "version": "3.0",
+  "version": "3.0.1",
   "description": "Generates button events from GPIO pins.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bnielsen1965/rpi-gpio-buttons.git"
+    "url": "git+https://github.com/Pittan/rpi-gpio-buttons.git"
   },
   "keywords": [
     "gpio",
