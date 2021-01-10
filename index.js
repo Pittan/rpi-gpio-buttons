@@ -51,12 +51,9 @@ class GPIOButtons extends EventEmitter {
     // setup each pin as a button input
     for (let i = 0; i < this.Config.pins.length; i++) {
       try {
+        const pin = typeof this.Config.pins[i] === 'object' ? this.Config.pins[i].pin : this.Config.pins[i]
         const inputInstance = await this.buttonSetup(this.Config.pins[i]);
-        if (typeof this.Config.pins[i] === 'object') {
-          inputInstances[this.Config.pins[i].pin] = inputInstance
-        } else {
-          inputInstances[this.Config.pins[i]] = inputInstance
-        }
+        inputInstances[pin] = inputInstance
       }
       catch (error) {
         this.emit('error', `Failed to setup button pin ${this.Config.pins[i]}. ${error.message}`);
@@ -78,7 +75,7 @@ class GPIOButtons extends EventEmitter {
         pullResistor = pin.pullResistor; // PULL_NONE: 0, PULL_DOWN: 1, PULL_UP: 2
       }
 
-      resolve(new this.gpio.DigitalInput({pinNumber, pullResistor}));
+      resolve(new this.gpio.DigitalInput({pin: pinNumber, pullResistor}));
     });
   }
 
