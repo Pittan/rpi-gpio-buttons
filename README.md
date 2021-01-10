@@ -1,6 +1,8 @@
 Raspberry Pi GPIO Button Event Emitter
 ======================================
 
+This is a fork of https://github.com/bnielsen1965/rpi-gpio-buttons.
+
 The rpi-gpio-buttons module is used to develop a rich user interface from simple
 button inputs by generating events based on the timing of user interactions with
 the buttons. Possible button events include *'clicked'*, *'double_clicked'*, *'pressed'*,
