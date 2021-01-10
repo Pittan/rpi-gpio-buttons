@@ -2,13 +2,8 @@
 const EventEmitter = require('events').EventEmitter;
 const ButtonEvents = require('button-events');
 
-// gpio modes from rpi-gpio
-const MODE_BCM = 'mode_bcm';
-const MODE_RPI = 'mode_rpi';
-
 const Defaults = {
-  mode: MODE_BCM, // mode to use for rpi-gpio pin numbering
-  pins: [], // array of button pin numbers, MODE_BCM == use gpio numbers, MODE_RPI (default) == use 40 pin header pin number
+  pins: [], // array of button pin numbers (Acceptable values are based on https://github.com/nebrius/raspi-gpio#pin-naming)
   usePullUp: true, // is button input pulled high
   timing: {
     debounce: 30, // 30 ms debounce
@@ -36,7 +31,6 @@ class GPIOButtons extends EventEmitter {
   gpioSetup () {
     this.emit('debug', 'Setup rpi-gpio.');
     let gpio = require('rpi-gpio');
-    gpio.setMode(this.Config.mode);
     return gpio;
   }
 
@@ -126,8 +120,5 @@ class GPIOButtons extends EventEmitter {
   }
 
 };
-
-GPIOButtons.MODE_BCM = MODE_BCM;
-GPIOButtons.MODE_RPI = MODE_RPI;
 
 module.exports = GPIOButtons;
