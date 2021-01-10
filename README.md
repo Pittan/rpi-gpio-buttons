@@ -7,10 +7,9 @@ the buttons. Possible button events include *'clicked'*, *'double_clicked'*, *'p
 *'released'*, and *'clicked_pressed'*. Complex application interactions can be developed
 from a single button input.
 
-The package utilizes [rpi-gpio](https://www.npmjs.com/package/rpi-gpio) to monitor the
+The package utilizes [raspi-gpio](https://www.npmjs.com/package/raspi-gpio) to monitor the
 GPIO pins for button signals and the [button-events](https://www.npmjs.com/package/button-events) module
 to convert those signals into user events.
-
 
 # Usage
 
@@ -25,6 +24,16 @@ buttons attached to the GPIO inputs, and Node.js to develop your application.
 const RPiGPIOButtons = require('rpi-gpio-buttons');
 let buttons = new RPiGPIOButtons({
   pins: [17, 27] // use GPIO 17 and 27 for buttons
+});
+```
+or 
+```javascript
+const RPiGPIOButtons = require('rpi-gpio-buttons');
+let buttons = new RPiGPIOButtons({
+  pins: [
+    { pin: 17, pullResistor: RPiGPIOButtons.PULL_DOWN },
+    { pin: 27, pullResistor: RPiGPIOButtons.PULL_DOWN }
+  ] // use GPIO 17 and 27 for buttons
 });
 ```
 
@@ -159,12 +168,6 @@ buttons
   });
 ```
 
-**NOTE:** If an rpi-gpio instance is passed to rpi-gpio-buttons in the constructor configuration
-then the destroy() method will only cleanup the event listener and button resources used
-by rpi-gpio-buttons, but it will not destroy the rpi-gpio instance. The application that
-created the rpi-gpio instance will be responsible for destroying the instance.
-
-
 # Configuration
 
 When creating a new instance of rpi-gpio-buttons the constructor must be provided a
@@ -190,69 +193,6 @@ the rpi-gpio mode selected.
 const RPiGPIOButtons = require('rpi-gpio-buttons');
 // create events for buttons on GPIO17, GPIO18, and GPIO27
 let buttons = new RPiGPIOButtons({ pins: [17, 18, 27] });
-```
-
-
-## mode
-
-**(optional)**
-
-Default value: MODE_BCM
-
-Possible value: MODE_BCM or MODE_RPI
-
-When the rpi-gpio-buttons init() method is called it will initialize the rpi-gpio module
-and set the pin mode used to associate the numbers in the pin array with GPIO pin numbers.
-See the [rpi-gpio](https://www.npmjs.com/package/rpi-gpio) documentation for more details
-about the pin modes.
-```javascript
-const RPiGPIOButtons = require('rpi-gpio-buttons');
-// create an rpi-gpio-buttons instance with the rpi-gpio module setup in BCM mode
-let buttonsBCM = new RPiGPIOButtons({ mode: RPiGPIOButtons.MODE_BCM, pins: [11] });
-```
-or
-```javascript
-const RPiGPIOButtons = require('rpi-gpio-buttons');
-// create an rpi-gpio-buttons instance with the rpi-gpio module setup in RPI mode
-let buttonsRPI = new RPiGPIOButtons({ mode: RPiGPIOButtons.MODE_RPI, pins: [17] });
-```
-
-**NOTE:** When including an existing rpi-gpio instance in the *gpio* configuration field
-the mode option the init() will not set the pin mode so the *mode* option is not needed.
-See the *gpio* configuration option for more detail.
-
-
-## gpio
-
-**(optional)**
-
-Default value: undefined
-
-Possible value: set to an existing rpi-gpio instance
-
-If the application has already created an instance and initialized rpi-gpio then it
-can be passed to rpi-gpio-buttons in the configuration *gpio* field. This ensures that the
-application and rpi-gpio-buttons do not create competing instances of the rpi-gpio module.
-```javascript
-const RPiGPIO = require('rpi-gpio');
-const RPiGPIOButtons = require('rpi-gpio-buttons');
-
-// setup the application rpi-gpio
-RPiGPIO.setMode(RPiGPIO.MODE_BCM);
-
-// create an rpi-gpio-buttons instance that uses the existing rpi-gpio instance
-let buttons = new RPiGPIOButtons({
-  pins: [17, 18, 27], // define pins used for buttons
-  gpio: RPiGPIO       // use the applications rpi-gpio instance
-});
-// initialize rpi-gpio-buttons
-buttons.init()
-  .then(() => {
-    console.log('buttons is initialized, events are active')
-  })
-  .catch(error => {
-    console.log(`An error occured during buttons init(). ${error.message}`);
-  });
 ```
 
 
