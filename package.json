@@ -1,6 +1,6 @@
 {
-  "name": "rpi-gpio-buttons",
-  "version": "2.0.1",
+  "name": "@pittankopta/rpi-gpio-buttons",
+  "version": "3.0",
   "description": "Generates button events from GPIO pins.",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "press",
     "release"
   ],
-  "author": "Bryan Nielsen <bnielsen1965@gmail.com> (https://github.com/bnielsen1965)",
+  "author": "Amon Keishima <pittan@pittankopta.net> (https://github.com/pittan)",
   "license": "MIT",
   "dependencies": {
     "button-events": "^1.0.2",
